@@ -85,7 +85,7 @@ def create_report(cpu_samples, memory_samples, file_samples):
 def detect_memory_leak(memory_samples, process_name):
     is_memory_increasing_over_time = all(i < j for i, j in zip(memory_samples, memory_samples[1:]))
     if is_memory_increasing_over_time:
-        message = "Potental memory leak in process: {}; allocated memory for the process is steadily increasing".format(process_name)
+        message = "Potential memory leak in process: {}; allocated memory for the process is steadily increasing".format(process_name)
         warnings.warn(message)
     else:
         print("Memory leak not detected")

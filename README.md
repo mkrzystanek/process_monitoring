@@ -10,3 +10,6 @@ Application supports two commands:
  - execute `python3 ./test/memory_leak.py &` command. The process pid will be printed on the screen.
  - execute `python3 -m process_monitor monitor python3 30 --pid <memory process pid>`
 
+Application can be executed on Linux operating systems.
+
+For process monitoring the `psutil` library was used. For details of the used methods output please refer to `psutil` [documentation](https://psutil.readthedocs.io/en/latest)  
