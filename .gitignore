@@ -1,1 +1,2 @@
-process_monitor/__pycache__/__init__.cpython-311.pyc
+process_monitor/__pycache__/*
+report.csv
