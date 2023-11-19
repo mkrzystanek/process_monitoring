@@ -34,6 +34,7 @@ def monitor(process_name: str, duration_in_seconds: int, sampling_interval_in_se
         print("Memory usage average for process {}: {}".format(process_name, average(private_memory_samples)))
         print("Open file descriptors average for process {}: {}".format(process_name, average(open_file_descriptors_samples)))
 
+# execute task every interval for a duration
 def do_every(interval: int, duration: int, task):
     start_time = time.time()
     next_time  = start_time + interval
@@ -53,7 +54,7 @@ def do_every(interval: int, duration: int, task):
         # skip the task if the execution took longer then interval
         next_time += (time.time() - next_time) // interval * interval + interval
 
-
+# find a process and extract its metrics
 def monitor_process(name: str, pid: int, cpu_samples, memory_samples, file_samples):
     for process in psutil.process_iter():
         if process.name() == name and (pid == -1 or pid == process.pid):
@@ -72,6 +73,7 @@ def monitor_process(name: str, pid: int, cpu_samples, memory_samples, file_sampl
 def average(list: list[float]):
     return sum(list) / len(list)
 
+# creates a csv report with collected metrics
 def create_report(cpu_samples, memory_samples, file_samples):
     with open('report.csv', 'w', newline='') as file:
         writer = csv.writer(file)
@@ -82,7 +84,9 @@ def create_report(cpu_samples, memory_samples, file_samples):
         for (cpu_sample, memory_sample, file_sample) in zip(cpu_samples, memory_samples, file_samples):
             writer.writerow([cpu_sample, memory_sample, file_sample])
 
+# check if total private memory allocated by process is increasing
 def detect_memory_leak(memory_samples, process_name):
+    # zip() creates pairs of adjacent elements, all() checks if all elements satisfy the condition i < j, where i and j are elements of a pair
     is_memory_increasing_over_time = all(i < j for i, j in zip(memory_samples, memory_samples[1:]))
     if is_memory_increasing_over_time:
         message = "Potential memory leak in process: {}; allocated memory for the process is steadily increasing".format(process_name)
