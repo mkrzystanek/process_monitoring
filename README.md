@@ -8,5 +8,5 @@ Application supports two commands:
 
  - build docker image and run the container in interactive mode
  - execute `python3 ./test/memory_leak.py &` command. The process pid will be printed on the screen.
- - execute `python3 -m process_monitoring monitor python3 30 --pid <memory process pid>`
+ - execute `python3 -m process_monitor monitor python3 30 --pid <memory process pid>`
 
